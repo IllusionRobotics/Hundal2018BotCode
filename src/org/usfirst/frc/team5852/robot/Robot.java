@@ -7,6 +7,7 @@
 
 package org.usfirst.frc.team5852.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.RobotDrive;
@@ -80,11 +81,54 @@ public class Robot extends IterativeRobot {
 		default:
 			//baseline auto
 			while (isAutonomous() && isEnabled()){
-				//runs loop 250000 with i increasing every time loop is run
-				for(int i = 0; i < 250000; i++) {
-					 //motors run at half speed wile loop is running
-					drivetrain.tankDrive(0.5, 0.5);
+				String gameData;
+				gameData = DriverStation.getInstance().getGameSpecificMessage();
+				if(gameData.charAt(0) == 'L')
+				{
+					//runs loop 250000 with i increasing every time loop is run
+					for(int i = 0; i < 250000; i++) {
+						//motors run at half speed wile loop is running
+						drivetrain.tankDrive(0.5, 0.5);
+					}
+					for(int i = 0; i < 250000; i++) {
+						//motors run at half speed wile loop is running
+						drivetrain.tankDrive(0.0, 0.5);
+					}
+					for(int i = 0; i < 250000; i++) {
+						//motors run at half speed wile loop is running
+						drivetrain.tankDrive(0.5, 0.5);
+					}
+					for(int i = 0; i < 250000; i++) {
+						//motors run at half speed wile loop is running
+						drivetrain.tankDrive(0.5, 0.0);
+					}
+					for(int i = 0; i < 250000; i++) {
+						//motors run at half speed wile loop is running
+						drivetrain.tankDrive(0.5, 0.5);
+					}
+				} else {
+					for(int i = 0; i < 250000; i++) {
+						//motors run at half speed wile loop is running
+						drivetrain.tankDrive(0.5, 0.5);
+					}
+					for(int i = 0; i < 250000; i++) {
+						//motors run at half speed wile loop is running
+						drivetrain.tankDrive(0.5, 0.0);
+					}
+					for(int i = 0; i < 250000; i++) {
+						//motors run at half speed wile loop is running
+						drivetrain.tankDrive(0.5, 0.5);
+					}
+					for(int i = 0; i < 250000; i++) {
+						//motors run at half speed wile loop is running
+						drivetrain.tankDrive(0.0, 0.5);
+					}
+					for(int i = 0; i < 250000; i++) {
+						//motors run at half speed wile loop is running
+						drivetrain.tankDrive(0.5, 0.5);
+					}
 				}
+			
 			}
 
 			break;
