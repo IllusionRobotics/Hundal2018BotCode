@@ -10,8 +10,10 @@ package org.usfirst.frc.team5852.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.Talon;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -32,12 +34,15 @@ public class Robot extends IterativeRobot {
 	Talon frontRight = new Talon(1);
 	Talon backLeft = new Talon(2);
 	Talon backRight = new Talon(3);
-
+	SpeedControllerGroup m_left = new SpeedControllerGroup(frontLeft, backLeft);
+	SpeedControllerGroup m_right = new SpeedControllerGroup(frontRight, backRight);	
+	
 	@SuppressWarnings("deprecation")
 	//drivetrain
-	RobotDrive drivetrain = new RobotDrive(frontLeft, backLeft, frontRight, backRight);
+	DifferentialDrive drivetrain = new DifferentialDrive(m_left, m_right);
 	//Joysticks
 	Joystick joystick = new Joystick(0);
+	String gameData;
 	/**
 	 * This function is run when the robot is first started up and should be
 	 * used for any initialization code.
@@ -64,7 +69,8 @@ public class Robot extends IterativeRobot {
 	public void autonomousInit() {
 		m_autoSelected = m_chooser.getSelected();
 		// autoSelected = SmartDashboard.getString("Auto Selector",
-		// defaultAuto);
+		// defaultAuto);				
+		gameData = DriverStation.getInstance().getGameSpecificMessage();
 		System.out.println("Auto selected: " + m_autoSelected);
 	}
 
@@ -81,8 +87,7 @@ public class Robot extends IterativeRobot {
 		default:
 			//baseline auto
 			while (isAutonomous() && isEnabled()){
-				String gameData;
-				gameData = DriverStation.getInstance().getGameSpecificMessage();
+				
 				if(gameData.charAt(0) == 'L')
 				{
 					//runs loop 250000 with i increasing every time loop is run
@@ -127,6 +132,7 @@ public class Robot extends IterativeRobot {
 						//motors run at half speed wile loop is running
 						drivetrain.tankDrive(0.5, 0.5);
 					}
+					Timer.delay(12);
 				}
 			
 			}
